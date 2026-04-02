@@ -10,6 +10,47 @@
     content="Interactive website for PCA visualizations of contextual embeddings."
   />
   <style>
+
+  .references-card a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+
+  .references-card a:hover {
+    color: #a8324a;
+  }
+
+  .copy-btn {
+    margin-left: 8px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: white;
+    cursor: pointer;
+    color: var(--accent);
+    transition: 0.2s;
+    vertical-align: middle;
+  }
+
+  .copy-btn:hover {
+    background: var(--accent-soft);
+  }
+
+  .references-card li {
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .bibtex {
+    display: none;
+  }
+
+
+
+
     :root {
       --bg: #f6f3ef;
       --panel: rgba(255, 255, 255, 0.78);
@@ -448,18 +489,67 @@
 
         <div class="right-column">
 
+        <div class="references-card">
+          <h2>References:</h2>
+          <ul>
+            <li>
+              Gorzoni, G., Pannitto, L., &amp; Masini, F. (2026).
+              <i>“Layer su Layer”: Identifying and Disambiguating the Italian NPN Construction in BERT’s family</i>.
+              In: Proceedings of the Workshop on Cognitive Modeling and Computational Linguistics. Accepted at CMCL.
+              <button class="copy-btn" onclick="copyBibtex('bib1', this)">Copy BibTeX</button>
+              <pre id="bib1" class="bibtex">@article{gorzoni2025parole,
+  author  = {Gorzoni, Greta},
+  title   = {Parole confiscate e memoria riaccesa: dare voce al silenzio delle immagini. Una nota a partire dal film di Raphaël Pillosio, {Les mots qu’elles eurent un jour}},
+  journal = {Il de Martino. Storie voci suoni},
+  year    = {2025},
+  number  = {39}
+}</pre>
+            </li>
 
-          <div class="references-card">
-            <h2>References:</h2>
-            <ul>
-              <li>Greta Gorzoni, Ludovica Pannitto, and Francesca Masini (2026). “’Layer su Layer’: Identi-
-fying and Disambiguating the Italian NPN Construction in BERT’s family”. In: Proceedings
-of the Workshop on Cognitive Modeling and Computational Linguistics. Accepted at CMCL</li>
-              <li>Gorzoni, G., Pannitto, L., & Masini, F. (2026). NPN Construction and Distractor dataset (v1.0.2) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.19095867</li>
-              <li>Masini, F. (2024). Costruzioni su costruzioni: idiomaticity and regularity of NPN discontinuous reduplications in Italian. TOPOI, 51-82.</li>
-              <li>Masini, F. (2024). NPN discontinuous reduplications in Italian: dataset.</li>
-            </ul>
-          </div>
+            <li>
+              <a href="https://doi.org/10.5281/zenodo.19095867" target="_blank" rel="noopener noreferrer">
+                Gorzoni, G., Pannitto, L., &amp; Masini, F. (2026). <i>NPN Construction and Distractor dataset</i> (v1.0.2) [Data set]. Zenodo ↗
+              </a>
+              <button class="copy-btn" onclick="copyBibtex('bib1', this)">Copy BibTeX</button>
+              <pre id="bib1" class="bibtex">@dataset{gorzoni2026npn,
+          author    = {Gorzoni, Greta and Pannitto, Ludovica and Masini, Francesca},
+          title     = {NPN Construction and Distractor dataset},
+          year      = {2026},
+          publisher = {Zenodo},
+          doi       = {10.5281/zenodo.19095867}
+        }</pre>
+            </li>
+
+            <li>
+              <a href="https://cris.unibo.it/handle/11585/973040" target="_blank" rel="noopener noreferrer">
+                Masini, F. (2024). <i>Costruzioni su costruzioni: idiomaticity and regularity of NPN discontinuous reduplications in Italian</i>. TOPOI, 51–82. ↗
+              </a>
+                            <button class="copy-btn" onclick="copyBibtex('bib1', this)">Copy BibTeX</button>
+              <pre id="bib1" class="bibtex">@article{masini2024costruzioni,
+  title={Costruzioni su costruzioni: idiomaticity and regularity of NPN discontinuous reduplications in Italian},
+  author={Masini, Francesca and others},
+  journal={TOPOI},
+  pages={51--82},
+  year={2024},
+  publisher={Aracne}
+}</pre>
+            </li>
+
+            <li>
+              <a href="https://amsacta.unibo.it/id/eprint/7489/" target="_blank" rel="noopener noreferrer">
+                Masini, F. (2024). <i>NPN discontinuous reduplications in Italian: dataset</i>. ↗
+              </a>
+                            <button class="copy-btn" onclick="copyBibtex('bib1', this)">Copy BibTeX</button>
+              <pre id="bib1" class="bibtex">@dataset{masini2024npn,
+  title={NPN discontinuous reduplications in Italian: dataset},
+  author={Masini, Francesca},
+  year={2024},
+  publisher={Univesity of Bologna}
+}</pre>
+            </li>
+          </ul>
+        </div>
+
 
 
                     <div class="summary-card">
@@ -504,7 +594,7 @@ of the Workshop on Cognitive Modeling and Computational Linguistics. Accepted at
             </p>
           </div>
           <div class="meta-row">
-            <span class="meta-pill" id="metadataset">Dataset composition: Identification</span>
+            <span class="meta-pill" id="metadataset">Dataset composition: 240 instances of NPN Cxns and distractors.</span>
             <span class="meta-pill" id="metaEmbedding">Embedding: [UNK]</span>
           </div>
         </div>
@@ -546,6 +636,26 @@ of the Workshop on Cognitive Modeling and Computational Linguistics. Accepted at
   </div>
 
   <script>
+
+
+    function copyBibtex(id, btn) {
+  const text = document.getElementById(id).textContent;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const oldText = btn.textContent;
+    btn.textContent = "Copied!";
+    setTimeout(() => {
+      btn.textContent = oldText;
+    }, 1200);
+  }).catch(() => {
+    btn.textContent = "Error";
+    setTimeout(() => {
+      btn.textContent = "Copy BibTeX";
+    }, 1200);
+  });
+}
+
+
     const visualizations = [
       {
         id: "unk-identification",
@@ -648,6 +758,9 @@ of the Workshop on Cognitive Modeling and Computational Linguistics. Accepted at
 
     renderButtons();
   </script>
+
+
+
 </body>
 
 
