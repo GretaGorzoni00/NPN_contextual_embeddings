@@ -416,13 +416,12 @@
         </div>
 
         <div class="summary-card">
-          <h2>How to read the visualizations</h2>
+          <h2>How to read the visualizations:</h2>
           <ul>
             <li><strong>Points</strong>: individual dataset instances.</li>
             <li><strong>Colors</strong>: class labels or semantic labels.</li>
-            <li><strong>Frames / layers</strong>: successive hidden layers of the model.</li>
-            <li><strong>PCA1 / PCA2</strong>: first two principal components of the original high-dimensional embeddings.</li>
-            <li><strong>Interpretation</strong>: visible clustering can suggest representational structure, but PCA remains a partial projection and should be read together with probing scores.</li>
+            <li><strong>Frames / layers</strong>: successive hidden layers of the BERT model.</li>
+            <li><strong>Interpretation</strong>: visible clustering can suggest distinctions in representational space, but PCA remains a partial projection and should be read together with probing scores.</li>
           </ul>
         </div>
       </div>
@@ -432,7 +431,7 @@
       <aside class="panel sidebar">
         <h2>Select a visualization</h2>
         <p class="muted">
-          Switch between experimental conditions and embedding types. The main panel updates dynamically without leaving the page.
+          Switch between experimental conditions and embedding types.
         </p>
 
         <div class="pca-list" id="pcaList"></div>
@@ -440,18 +439,10 @@
         <div class="mini-card">
           <h3>CMCL framing</h3>
           <p>
-            The aim is not to treat PCA as proof of linguistic knowledge, but as an exploratory lens on whether the internal geometry of contextual representations aligns with linguistically motivated distinctions such as constructional identity and constructional meaning.
+            The aim is not to treat PCA as proof of linguistic knowledge, but as an exploratory lens on whether the internal geometry of contextual representations could align with linguistically motivated distinctions such as constructional identity and constructional meaning.
           </p>
         </div>
 
-        <div class="mini-card">
-          <h3>Before publishing</h3>
-          <ul>
-            <li>Place this file in the same folder as your PCA HTML files.</li>
-            <li>Replace the placeholder third filename if needed.</li>
-            <li>Upload the folder to GitHub and enable GitHub Pages.</li>
-          </ul>
-        </div>
       </aside>
 
       <section class="panel content">
@@ -499,9 +490,7 @@
           <iframe id="viewer" src="unk_identification.html" title="PCA visualization"></iframe>
         </div>
 
-        <p class="footer-note" id="footerNote">
-          Note: if one embedded file does not load on GitHub Pages, verify that its filename exactly matches the value defined in the configuration below.
-        </p>
+
       </section>
     </main>
   </div>
