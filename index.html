@@ -11,6 +11,40 @@
   />
   <style>
 
+
+.extra-boxes {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  margin-top: 12px;
+  gap: 12px;
+}
+
+.extra-box h4 {
+  margin: 0 0 6px;
+  font-size: 0.9rem;
+  color: var(--accent);   /* <-- bordeaux */
+  font-weight: 600;
+}
+
+.extra-box {
+  background: rgba(255,255,255,0.92);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.extra-box h4 {
+  margin: 0 0 6px;
+  font-size: 0.9rem;
+}
+
+.extra-box p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
   .references-card a {
     color: var(--accent);
     text-decoration: underline;
@@ -468,7 +502,14 @@
       iframe {
         height: 580px;
       }
+
+      .extra-boxes {
+    grid-template-columns: 1fr;
+  }
+
     }
+
+
   </style>
 </head>
 <body>
@@ -510,8 +551,8 @@
               <a href="https://doi.org/10.5281/zenodo.19095867" target="_blank" rel="noopener noreferrer">
                 Gorzoni, G., Pannitto, L., &amp; Masini, F. (2026). <i>NPN Construction and Distractor dataset</i> (v1.0.2) [Data set]. Zenodo ↗
               </a>
-              <button class="copy-btn" onclick="copyBibtex('bib1', this)">Copy BibTeX</button>
-              <pre id="bib1" class="bibtex">@dataset{gorzoni2026npn,
+              <button class="copy-btn" onclick="copyBibtex('bib2', this)">Copy BibTeX</button>
+              <pre id="bib2" class="bibtex">@dataset{gorzoni2026npn,
           author    = {Gorzoni, Greta and Pannitto, Ludovica and Masini, Francesca},
           title     = {NPN Construction and Distractor dataset},
           year      = {2026},
@@ -524,8 +565,8 @@
               <a href="https://cris.unibo.it/handle/11585/973040" target="_blank" rel="noopener noreferrer">
                 Masini, F. (2024). <i>Costruzioni su costruzioni: idiomaticity and regularity of NPN discontinuous reduplications in Italian</i>. TOPOI, 51–82. ↗
               </a>
-                            <button class="copy-btn" onclick="copyBibtex('bib1', this)">Copy BibTeX</button>
-              <pre id="bib1" class="bibtex">@article{masini2024costruzioni,
+                            <button class="copy-btn" onclick="copyBibtex('bib3', this)">Copy BibTeX</button>
+              <pre id="bib3" class="bibtex">@article{masini2024costruzioni,
   title={Costruzioni su costruzioni: idiomaticity and regularity of NPN discontinuous reduplications in Italian},
   author={Masini, Francesca and others},
   journal={TOPOI},
@@ -539,8 +580,8 @@
               <a href="https://amsacta.unibo.it/id/eprint/7489/" target="_blank" rel="noopener noreferrer">
                 Masini, F. (2024). <i>NPN discontinuous reduplications in Italian: dataset</i>. ↗
               </a>
-                            <button class="copy-btn" onclick="copyBibtex('bib1', this)">Copy BibTeX</button>
-              <pre id="bib1" class="bibtex">@dataset{masini2024npn,
+                            <button class="copy-btn" onclick="copyBibtex('bib4', this)">Copy BibTeX</button>
+              <pre id="bib4" class="bibtex">@dataset{masini2024npn,
   title={NPN discontinuous reduplications in Italian: dataset},
   author={Masini, Francesca},
   year={2024},
@@ -628,6 +669,7 @@
             <div>Embedded interactive HTML</div>
           </div>
           <iframe id="viewer" src="unk_identification.html" title="PCA visualization"></iframe>
+          <div class="extra-boxes" id="extraBoxes"></div>
         </div>
 
 
@@ -659,7 +701,7 @@
     const visualizations = [
       {
         id: "unk-identification",
-        label: "UNK · Identification",
+        label: "UNK · Identification across NPN Cxns and Distractors",
         shortTag: "[UNK]",
         Dataset_composition: "240 instances of NPN Cxns and distractors.",
         embedding: "[UNK]",
@@ -671,7 +713,18 @@
         inspect:
           "Inspect whether actual NPN constructions and distractors become progressively more separable across layers, and whether later layers yield a more stable geometric organization.",
         probe:
-          "This view complements probing accuracy by showing whether classification-relevant information is associated with visible spatial organization in the projected representation space."
+          "This view complements probing accuracy by showing whether classification-relevant information is associated with visible spatial organization in the projected representation space.",
+
+        extra: [
+          {
+  title: "ACTUAL NPN CONSTRUCTIONS",
+  text: "Positive instances of the NPN construction, characterized by the repetition of the same noun across a prepositional slot. These examples encode a conventionalized form–meaning pairing and allow us to assess whether such constructional information is captured in the embedding space."
+          },
+          {
+  title: "DISTRACTOR INSTANCES",
+  text: "Sequences that are superficially similar to NPN patterns but do not instantiate the construction (e.g., different Cxns or non-constructional structures). These negative examples are crucial for evaluating whether the model can distinguish genuine constructional configurations from surface-level similarity."
+          }
+        ]
       },
       {
         id: "prep-semantic",
@@ -687,7 +740,22 @@
         inspect:
           "Inspect whether semantically related instances cluster together, whether some semantic classes overlap more than others, and whether the organization changes across layers.",
         probe:
-          "This view can help interpret probing results by revealing whether semantic distinctions recovered by the classifier correspond to more or less coherent geometric groupings in the PCA space."
+          "This view can help interpret probing results by revealing whether semantic distinctions recovered by the classifier correspond to more or less coherent geometric groupings in the PCA space.",
+
+          extra: [
+{
+  title: "SUCCESSION/ITERATION/DISTRIBUTIVITY",
+  text: "The construction expresses a sequence or repetition of events over time, or a distributive pattern across entities or locations, where the repeated structure profiles progression or repeated occurrence."
+},
+{
+  title: "GREATERPLURALITY/ACCUMULATION",
+  text: "The construction conveys an increase in quantity or intensity, denoting accumulation, abundance, or a growing set of entities associated with the repeated noun."
+},
+{
+  title: "JUXTAPOSITION/CONTACT",
+  text: "The construction encodes spatial proximity or direct contact between entities, typically highlighting adjacency, alignment, or physical closeness."
+}
+]
       },
       {
         id: "unk-semantic",
@@ -703,7 +771,22 @@
         inspect:
           "Inspect whether semantically related instances cluster together, whether some semantic classes overlap more than others, and whether the organization changes across layers.",
         probe:
-          "This view can help interpret probing results by revealing whether semantic distinctions recovered by the classifier correspond to more or less coherent geometric groupings in the PCA space."
+          "This view can help interpret probing results by revealing whether semantic distinctions recovered by the classifier correspond to more or less coherent geometric groupings in the PCA space.",
+
+                  extra: [
+{
+  title: "SUCCESSION/ITERATION/DISTRIBUTIVITY",
+  text: "The construction expresses a sequence or repetition of events over time, or a distributive pattern across entities or locations, where the repeated structure profiles progression or repeated occurrence."
+},
+{
+  title: "GREATERPLURALITY/ACCUMULATION",
+  text: "The construction conveys an increase in quantity or intensity, denoting accumulation, abundance, or a growing set of entities associated with the repeated noun."
+},
+{
+  title: "JUXTAPOSITION/CONTACT",
+  text: "The construction encodes spatial proximity or direct contact between entities, typically highlighting adjacency, alignment, or physical closeness."
+}
+]
       }
     ];
 
@@ -717,6 +800,7 @@
     const inspectBox = document.getElementById("inspectBox");
     const probeBox = document.getElementById("probeBox");
     const viewerPath = document.getElementById("viewerPath");
+    const extraBoxes = document.getElementById("extraBoxes");
 
     function renderButtons() {
       visualizations.forEach((viz, index) => {
@@ -754,9 +838,25 @@
       viewer.src = viz.file;
       viewerPath.textContent = `Loaded file: ${viz.file}`;
       document.title = `${viz.label} | PCA Visualizations`;
+
+
+      extraBoxes.innerHTML = "";
+
+viz.extra.forEach(box => {
+  const div = document.createElement("div");
+  div.className = "extra-box";
+
+  div.innerHTML = `
+    <h4>${box.title}</h4>
+    <p>${box.text}</p>
+  `;
+
+  extraBoxes.appendChild(div);
+});
     }
 
     renderButtons();
+setActiveVisualization("unk-identification");
   </script>
 
 
