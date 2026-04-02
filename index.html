@@ -10,6 +10,17 @@
     content="Interactive website for PCA visualizations of contextual embeddings."
   />
   <style>
+  
+.concept-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-left: 10px;
+  border-left: 3px solid var(--accent);
+  margin-bottom: 6px;
+}
 
 
 .extra-boxes {
@@ -518,17 +529,26 @@
       <div class="eyebrow"> ’Layer su Layer’ - CMCL 2026 paper · PCA visualtization explorer</div>
       <div class="hero-grid">
         <div>
-          <h1>PCA visualizations of BERT's contextual embeddings</h1>
-          <p class="lead">
-            This website presents interactive PCA projections of contextual embeddings extracted from a Transformer model in order to qualitatively inspect whether construction-relevant distinctions emerge in the representation space.
-          </p>
-          <p>
-            Each point corresponds to an instance of an Italian <em>NPN</em> construction or a distractor, depending on the experimental condition. Colors reflect constructional or semantic labels. The visualizations complement probing results by offering a qualitative view of how embeddings are geometrically organized across layers and embedding types.
-          </p>
+          <h1>PCA visualisations of BERT's contextual embeddings</h1>
+<p class="lead">
+This website accompanies the CMCL 2026 paper <i>“Layer su Layer: Identifying and Disambiguating the Italian NPN Construction in BERT’s family”</i> and provides an interactive visualization of the PCA projections of contextual embeddings extracted from BERT. The aim is to qualitatively explore whether construction-relevant distinctions emerge in the representation space.
+</p>
+
+<p>
+The study focuses on the Italian <em>NPN</em> (noun–preposition–noun) constructional family and investigates whether contextual embeddings encode information relevant to both construction identification and semantic disambiguation. Each point in the plots corresponds to an instance of an NPN construction or a distractor, depending on the experimental condition, while colors reflect constructional or semantic labels.
+</p>
+
+<p>
+These visualizations are intended as a qualitative complement to probing-based evaluation: rather than providing direct evidence of linguistic knowledge, they offer an exploratory perspective on how embeddings are geometrically organized across layers and embedding types, and whether such organization aligns with linguistically motivated distinctions.
+</p>
         </div>
 
 
         <div class="right-column">
+
+          <div class="concept-title">
+  Italian NPN Constructions in Contextual Space
+</div>
 
         <div class="references-card">
           <h2>References:</h2>
@@ -599,7 +619,7 @@
               <li><strong>Points</strong>: individual dataset instances.</li>
               <li><strong>Colors</strong>: class labels or semantic labels.</li>
               <li><strong>Frames / layers</strong>: successive hidden layers of the BERT model.</li>
-              <li><strong>Interpretation</strong>: visible clustering can suggest distinctions in representational space, but PCA remains a partial projection and should be read together with probing scores.</li>
+              <li><strong>Interpretation</strong>: visible clustering can suggest distinctions in representational space, but PCA remains a partial projection and should be read together with probing results.</li>
             </ul>
           </div>
 
@@ -618,9 +638,14 @@
         <div class="pca-list" id="pcaList"></div>
 
         <div class="mini-card">
-          <h3>Scope of the PCA visualisation</h3>
+          <h3>How the contextual embddings of NPN instances are extracted from BERT?</h3>
           <p>
-            The aim is not to treat PCA as proof of linguistic knowledge, but as an exploratory lens on whether the internal geometry of contextual representations could align with linguistically motivated distinctions such as constructional identity and constructional meaning.
+
+Contextualized embeddings are extracted from BERT in inference mode to probe representations learned during pre-training.
+
+To isolate construction-level information, the preposition in the NPN construction is replaced with [UNK], forcing the model to rely on contextual and structural cues rather than lexical semantics.
+
+In parallel, embeddings are extracted for the original preposition in the unmodified sentence. Token positions are aligned via character-to-subword mapping, and these embeddings serve as a comparison point to assess the contribution of lexical information.
           </p>
         </div>
 
@@ -718,10 +743,12 @@
         extra: [
           {
   title: "ACTUAL NPN CONSTRUCTIONS",
+  color: "#5c7cfa" ,
   text: "Positive instances of the NPN construction, characterized by the repetition of the same noun across a prepositional slot. These examples encode a conventionalized form–meaning pairing and allow us to assess whether such constructional information is captured in the embedding space."
           },
           {
   title: "DISTRACTOR INSTANCES",
+  color: "#ef6351" ,
   text: "Sequences that are superficially similar to NPN patterns but do not instantiate the construction (e.g., different Cxns or non-constructional structures). These negative examples are crucial for evaluating whether the model can distinguish genuine constructional configurations from surface-level similarity."
           }
         ]
@@ -745,14 +772,17 @@
           extra: [
 {
   title: "SUCCESSION/ITERATION/DISTRIBUTIVITY",
+  color: "#2ec4b6" ,
   text: "The construction expresses a sequence or repetition of events over time, or a distributive pattern across entities or locations, where the repeated structure profiles progression or repeated occurrence."
 },
 {
-  title: "GREATERPLURALITY/ACCUMULATION",
+  title: "GREATER PLURALITY/ACCUMULATION",
+  color: "#5c7cfa"    ,
   text: "The construction conveys an increase in quantity or intensity, denoting accumulation, abundance, or a growing set of entities associated with the repeated noun."
 },
 {
   title: "JUXTAPOSITION/CONTACT",
+  color: "#ef6351" ,
   text: "The construction encodes spatial proximity or direct contact between entities, typically highlighting adjacency, alignment, or physical closeness."
 }
 ]
@@ -765,7 +795,7 @@
         embedding: "[UNK]",
         file: "unk_semantic.html",
         description:
-          "This visualization presents PCA projections for the semantic disambiguation task based on embeddings of the actual preposition token. Here the model has access to both lexical and contextual information, allowing us to explore whether different constructional meanings occupy distinct regions in the embedding space.",
+          "This visualization presents PCA projections for the semantic disambiguation task based on [UNK] embeddings. In this configuration, the prepositional slot is masked, so the model has access only to contextual information and not to the lexical identity of the preposition. This setting allows us to assess whether construction-specific semantic distinctions are encoded in the representations independently of lexical information associated with the preposition.",
         why:
           "The [UNK] strategy isolates the constructional configuration by minimizing lexical information from the preposition, making it especially useful for testing whether the model encodes the construction as a structured pattern rather than as a memorized lexical sequence.",
         inspect:
@@ -776,14 +806,17 @@
                   extra: [
 {
   title: "SUCCESSION/ITERATION/DISTRIBUTIVITY",
+  color: "#2ec4b6" ,
   text: "The construction expresses a sequence or repetition of events over time, or a distributive pattern across entities or locations, where the repeated structure profiles progression or repeated occurrence."
 },
 {
-  title: "GREATERPLURALITY/ACCUMULATION",
+  title: "GREATER PLURALITY/ACCUMULATION",
+  color: "#5c7cfa"    ,
   text: "The construction conveys an increase in quantity or intensity, denoting accumulation, abundance, or a growing set of entities associated with the repeated noun."
 },
 {
   title: "JUXTAPOSITION/CONTACT",
+  color: "#ef6351" ,
   text: "The construction encodes spatial proximity or direct contact between entities, typically highlighting adjacency, alignment, or physical closeness."
 }
 ]
@@ -846,10 +879,10 @@ viz.extra.forEach(box => {
   const div = document.createElement("div");
   div.className = "extra-box";
 
-  div.innerHTML = `
-    <h4>${box.title}</h4>
-    <p>${box.text}</p>
-  `;
+div.innerHTML = `
+  <h4 style="color: ${box.color || 'var(--accent)'}">${box.title}</h4>
+  <p>${box.text}</p>
+`;
 
   extraBoxes.appendChild(div);
 });
