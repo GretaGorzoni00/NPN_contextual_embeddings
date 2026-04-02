@@ -103,7 +103,7 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.95fr);
+      grid-template-columns: minmax(0, 1.3fr) minmax(420px, 1fr);
       gap: 28px;
       margin-top: 18px;
       align-items: start;
@@ -139,6 +139,36 @@
     .summary-card ul {
       margin: 0;
       padding-left: 18px;
+    }
+
+        .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .references-card {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .references-card h2 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .references-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .references-card li {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 6px;
     }
 
     .layout {
@@ -403,10 +433,10 @@
 <body>
   <div class="page">
     <section class="hero">
-      <div class="eyebrow">CMCL paper · PCA explorer</div>
+      <div class="eyebrow"> ’Layer su Layer’ - CMCL 2026 paper · PCA visualtization explorer</div>
       <div class="hero-grid">
         <div>
-          <h1>PCA visualizations of contextual embeddings</h1>
+          <h1>PCA visualizations of BERT's contextual embeddings</h1>
           <p class="lead">
             This website presents interactive PCA projections of contextual embeddings extracted from a Transformer model in order to qualitatively inspect whether construction-relevant distinctions emerge in the representation space.
           </p>
@@ -415,18 +445,38 @@
           </p>
         </div>
 
-        <div class="summary-card">
-          <h2>How to read the visualizations:</h2>
-          <ul>
-            <li><strong>Points</strong>: individual dataset instances.</li>
-            <li><strong>Colors</strong>: class labels or semantic labels.</li>
-            <li><strong>Frames / layers</strong>: successive hidden layers of the BERT model.</li>
-            <li><strong>Interpretation</strong>: visible clustering can suggest distinctions in representational space, but PCA remains a partial projection and should be read together with probing scores.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
 
+        <div class="right-column">
+
+
+          <div class="references-card">
+            <h2>References:</h2>
+            <ul>
+              <li>Greta Gorzoni, Ludovica Pannitto, and Francesca Masini (2026). “’Layer su Layer’: Identi-
+fying and Disambiguating the Italian NPN Construction in BERT’s family”. In: Proceedings
+of the Workshop on Cognitive Modeling and Computational Linguistics. Accepted at CMCL</li>
+              <li>Gorzoni, G., Pannitto, L., & Masini, F. (2026). NPN Construction and Distractor dataset (v1.0.2) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.19095867</li>
+              <li>Masini, F. (2024). Costruzioni su costruzioni: idiomaticity and regularity of NPN discontinuous reduplications in Italian. TOPOI, 51-82.</li>
+              <li>Masini, F. (2024). NPN discontinuous reduplications in Italian: dataset.</li>
+            </ul>
+          </div>
+
+
+                    <div class="summary-card">
+            <h2>How to read the visualizations:</h2>
+            <ul>
+              <li><strong>Points</strong>: individual dataset instances.</li>
+              <li><strong>Colors</strong>: class labels or semantic labels.</li>
+              <li><strong>Frames / layers</strong>: successive hidden layers of the BERT model.</li>
+              <li><strong>Interpretation</strong>: visible clustering can suggest distinctions in representational space, but PCA remains a partial projection and should be read together with probing scores.</li>
+            </ul>
+          </div>
+
+        </div>
+
+
+
+    </section>
     <main class="layout">
       <aside class="panel sidebar">
         <h2>Select a visualization</h2>
@@ -437,7 +487,7 @@
         <div class="pca-list" id="pcaList"></div>
 
         <div class="mini-card">
-          <h3>CMCL framing</h3>
+          <h3>Scope of the PCA visualisation</h3>
           <p>
             The aim is not to treat PCA as proof of linguistic knowledge, but as an exploratory lens on whether the internal geometry of contextual representations could align with linguistically motivated distinctions such as constructional identity and constructional meaning.
           </p>
@@ -448,20 +498,20 @@
       <section class="panel content">
         <div class="content-header">
           <div>
-            <h2 id="mainTitle">UNK · Identification</h2>
+            <h2 id="mainTitle">UNK · Identification across NPN Cxns and Distractors</h2>
             <p id="mainDescription">
-              This view shows PCA projections for the identification task based on <code>[UNK]</code> representations.
+              This visualization shows PCA projections for the construction identification task based on [UNK] representations. By replacing the prepositional slot with [UNK], the setup reduces direct lexical information and highlights whether constructional distinctions can still emerge in the embedding space.
             </p>
           </div>
           <div class="meta-row">
-            <span class="meta-pill" id="metaTask">Task: Identification</span>
+            <span class="meta-pill" id="metadataset">Dataset composition: Identification</span>
             <span class="meta-pill" id="metaEmbedding">Embedding: [UNK]</span>
           </div>
         </div>
 
         <div class="notes-grid">
           <article class="note-box">
-            <h3>Why <code>[UNK]</code>?</h3>
+            <h3>Why <code>[UNK]/PREP</code>?</h3>
             <p id="whyBox">
               The <code>[UNK]</code> strategy masks the lexical identity of the preposition, making it possible to test whether the model captures constructional information beyond specific lexical cues.
             </p>
@@ -501,7 +551,7 @@
         id: "unk-identification",
         label: "UNK · Identification",
         shortTag: "[UNK]",
-        task: "Identification",
+        Dataset_composition: "240 instances of NPN Cxns and distractors.",
         embedding: "[UNK]",
         file: "unk_identification.html",
         description:
@@ -509,41 +559,41 @@
         why:
           "The [UNK] strategy isolates the constructional configuration by minimizing lexical information from the preposition, making it especially useful for testing whether the model encodes the construction as a structured pattern rather than as a memorized lexical sequence.",
         inspect:
-          "Inspect whether true constructions and distractors become progressively more separable across layers, and whether later layers yield a more stable geometric organization.",
+          "Inspect whether actual NPN constructions and distractors become progressively more separable across layers, and whether later layers yield a more stable geometric organization.",
         probe:
-          "In the paper's scope, this view complements probing accuracy by showing whether classification-relevant information is associated with visible spatial organization in the projected representation space."
+          "This view complements probing accuracy by showing whether classification-relevant information is associated with visible spatial organization in the projected representation space."
       },
       {
         id: "prep-semantic",
         label: "PREP · Semantic disambiguation",
         shortTag: "PREP",
-        task: "Semantic disambiguation",
+        Dataset_composition: "120 instances for each semantic class.",
         embedding: "PREP",
         file: "prep_semantic.html",
         description:
           "This visualization presents PCA projections for the semantic disambiguation task based on embeddings of the actual preposition token. Here the model has access to both lexical and contextual information, allowing us to explore whether different constructional meanings occupy distinct regions in the embedding space.",
         why:
-          "Using the actual preposition token preserves lexical information that may interact with constructional meaning, which is especially relevant when testing fine-grained semantic distinctions among related NPN patterns.",
+          "Using the actual preposition token (PREP) preserves lexical information that may interact with constructional meaning, which is especially relevant when testing fine-grained semantic distinctions among related NPN patterns.",
         inspect:
           "Inspect whether semantically related instances cluster together, whether some semantic classes overlap more than others, and whether the organization changes across layers.",
         probe:
           "This view can help interpret probing results by revealing whether semantic distinctions recovered by the classifier correspond to more or less coherent geometric groupings in the PCA space."
       },
       {
-        id: "third-visualization",
-        label: "Third PCA view",
-        shortTag: "EDIT ME",
-        task: "Custom task",
-        embedding: "Custom",
-        file: "third_pca.html",
+        id: "unk-semantic",
+        label: "UNK · Semantic disambiguation",
+        shortTag: "[UNK]",
+        Dataset_composition: "120 instances for each semantic class.",
+        embedding: "[UNK]",
+        file: "unk_semantic.html",
         description:
-          "Replace this card with your third PCA file and its corresponding explanation. You can use it for UNK semantic, PREP identification, CLS, or any other experimental condition.",
+          "This visualization presents PCA projections for the semantic disambiguation task based on embeddings of the actual preposition token. Here the model has access to both lexical and contextual information, allowing us to explore whether different constructional meanings occupy distinct regions in the embedding space.",
         why:
-          "Edit this paragraph so that it explains what this representation targets and why it matters in the interpretability argument of the paper.",
+          "The [UNK] strategy isolates the constructional configuration by minimizing lexical information from the preposition, making it especially useful for testing whether the model encodes the construction as a structured pattern rather than as a memorized lexical sequence.",
         inspect:
-          "Explain here what the reader should look for when comparing this visualization with the others.",
+          "Inspect whether semantically related instances cluster together, whether some semantic classes overlap more than others, and whether the organization changes across layers.",
         probe:
-          "Use this space to connect the third plot to your probing results and to the broader CMCL framing of linguistic interpretability."
+          "This view can help interpret probing results by revealing whether semantic distinctions recovered by the classifier correspond to more or less coherent geometric groupings in the PCA space."
       }
     ];
 
@@ -551,7 +601,7 @@
     const viewer = document.getElementById("viewer");
     const mainTitle = document.getElementById("mainTitle");
     const mainDescription = document.getElementById("mainDescription");
-    const metaTask = document.getElementById("metaTask");
+    const metadataset = document.getElementById("metadataset");
     const metaEmbedding = document.getElementById("metaEmbedding");
     const whyBox = document.getElementById("whyBox");
     const inspectBox = document.getElementById("inspectBox");
@@ -586,7 +636,7 @@
 
       mainTitle.textContent = viz.label;
       mainDescription.innerHTML = viz.description;
-      metaTask.textContent = `Task: ${viz.task}`;
+      metadataset.textContent = `Dataset composition: ${viz.Dataset_composition}`;
       metaEmbedding.textContent = `Embedding: ${viz.embedding}`;
       whyBox.innerHTML = viz.why;
       inspectBox.innerHTML = viz.inspect;
